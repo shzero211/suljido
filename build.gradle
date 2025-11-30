@@ -29,14 +29,20 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
-
+	runtimeOnly 'com.h2database:h2'
+	implementation 'org.hibernate.orm:hibernate-spatial'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // Spring Validation
+	implementation 'org.orbisgis:h2gis:2.2.0'
+
+	//H2GIS 추가 (H2에서 Spatial 타입 사용을 위해 필수)
+	testImplementation 'org.orbisgis:h2gis:2.2.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
+
 
 	//implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
 	//testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'

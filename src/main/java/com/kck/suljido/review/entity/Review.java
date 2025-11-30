@@ -1,29 +1,31 @@
-package com.kck.suljido.tag.entity;
+package com.kck.suljido.review.entity;
 
 import com.kck.suljido.entity.BaseTimeEntity;
 import com.kck.suljido.store.entity.Store;
+import com.kck.suljido.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StoreTag extends BaseTimeEntity {
+public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Store store;
+    private User user;
 
     @ManyToOne
-    private Tag tag;
+    private Store store;
 
-    private Integer selectCount;
+    @Lob
+    private String content;
 
-
+    private Byte rating;
 
 }

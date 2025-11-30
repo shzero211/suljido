@@ -1,7 +1,10 @@
 package com.kck.suljido.user.entity;
 
+import com.kck.suljido.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +15,10 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "Users")
-public class User {
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String username;
@@ -24,10 +28,4 @@ public class User {
     private String nickname;
 
     private Boolean deleted;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
-
 }
