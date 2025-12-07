@@ -10,4 +10,10 @@ public class StoreDto {
             return new SearchAllResponse(store.getName(),store.getRoadAddress(),store.getJibunAddress(),store.getLocation().getY(),store.getLocation().getX(),store.getThumbnailImage());
         }
     }
+
+    public record FindNearByStoresResponse(Double lat,Double lng,String name){
+        public static FindNearByStoresResponse from(Store store){
+            return new FindNearByStoresResponse(store.getLocation().getY(), store.getLocation().getX(),store.getName());
+        }
+    }
 }

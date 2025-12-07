@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface StoreService {
     public List<StoreDto.SearchAllResponse> searchAll();
+
+    List findStoresNearby(double lat, double lng, double km);
 }

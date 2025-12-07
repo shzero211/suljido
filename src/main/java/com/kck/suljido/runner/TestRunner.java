@@ -44,7 +44,7 @@ public class TestRunner implements CommandLineRunner {
         Store store1=Store.builder()
                 .jibunAddress("서울시 금천구 시흥2동")
                 .roadAddress("시흥대로 77길 ")
-                .location(geometryFactory.createPoint(new Coordinate(126.9913485,37.5662952)))
+                .location(geometryFactory.createPoint(new Coordinate(126.88,37.45)))
                 .name("을지맥주")
                 .thumbnailImage("https://via.placeholder.com/150")
                 .build();
@@ -52,7 +52,7 @@ public class TestRunner implements CommandLineRunner {
         Store store2=Store.builder()
                 .jibunAddress("서울시 금천구 시흥3동")
                 .roadAddress("시흥대로 76길 ")
-                .location(geometryFactory.createPoint(new Coordinate(125.9913485,36.5662952)))
+                .location(geometryFactory.createPoint(new Coordinate(126.89,37.48)))
                 .name("을맥맥주")
                 .thumbnailImage("https://via.placeholder.com/150")
                 .build();
