@@ -1,5 +1,6 @@
 package com.kck.suljido.store.entity;
 
+import com.kck.suljido.common.Address;
 import com.kck.suljido.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,13 +19,11 @@ public class Store extends BaseTimeEntity {
 
     private String name;
 
-    private String roadAddress;
-
-    private String jibunAddress;
+    @Embedded
+    private Address address;
 
     @Column(nullable = false)
     private Point location;
-
 
     private String thumbnailImage;
 

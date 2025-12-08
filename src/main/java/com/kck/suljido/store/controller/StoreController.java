@@ -22,7 +22,7 @@ public class StoreController {
     }
 
     @GetMapping("/nearby")
-    public Result<List<StoreDto.FindNearByStoresResponse>> getNearbyStores(@RequestParam double lat,@RequestParam double lng,@RequestParam double km){
+    public Result<List<StoreDto.FindNearByStoresResponse>> getNearbyStores(@RequestParam("lat") double lat,@RequestParam("lng") double lng,@RequestParam("km") double km){
         List stores=storeService.findStoresNearby(lat,lng,km);
         return new Result<>(stores.size(),stores);
     }

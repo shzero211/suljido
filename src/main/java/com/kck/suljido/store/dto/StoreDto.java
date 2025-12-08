@@ -1,13 +1,24 @@
 package com.kck.suljido.store.dto;
 
 import com.kck.suljido.store.entity.Store;
+import lombok.Builder;
 import org.locationtech.jts.geom.Point;
 
 public class StoreDto {
     public record SearchAllRequest(){}
-    public record SearchAllResponse(String name, String roadAddress, String jibunAddress, Double lat,Double lng,String thumbnailImage){
+    @Builder
+    public record SearchAllResponse(String name, String province,String city,String district,String storeAddress, Double lat,Double lng,String thumbnailImage){
         public static SearchAllResponse from(Store store){
-            return new SearchAllResponse(store.getName(),store.getRoadAddress(),store.getJibunAddress(),store.getLocation().getY(),store.getLocation().getX(),store.getThumbnailImage());
+            return SearchAllResponse.builder()
+                    .name(store.getName())
+                    .province(store.getAddress().getProvince())
+                    .city(store.getAddress().getCity())
+                    .district(store.getAddress().getDistrict())
+                    .storeAddress(store.getAddress().getFullAddress())
+                    .lat(store.getLocation().getY())
+                    .lng(store.getLocation().getX())
+                    .thumbnailImage(store.getThumbnailImage())
+                    .build();
         }
     }
 

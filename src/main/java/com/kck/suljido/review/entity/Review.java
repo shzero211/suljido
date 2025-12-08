@@ -6,6 +6,10 @@ import com.kck.suljido.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -23,9 +27,18 @@ public class Review extends BaseTimeEntity {
     @ManyToOne
     private Store store;
 
+    @OneToMany(mappedBy = "review")
+    private List<ReviewImage> images=new ArrayList<>();
+
     @Lob
     private String content;
 
-    private Byte rating;
+    private Integer rating;
+    private String category; // 추천 주종
+    private LocalDateTime visitTime; //방문 시간
 
+    public void addImage(ReviewImage reviewImage) {
+        this.images.add(reviewImage);
+        reviewImage.setReview(this);
+    }
 }

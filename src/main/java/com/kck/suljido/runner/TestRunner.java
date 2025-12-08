@@ -1,5 +1,6 @@
 package com.kck.suljido.runner;
 
+import com.kck.suljido.common.Address;
 import com.kck.suljido.store.entity.Store;
 import com.kck.suljido.store.repository.StoreRepository;
 import com.kck.suljido.user.entity.User;
@@ -42,16 +43,14 @@ public class TestRunner implements CommandLineRunner {
 
         /*스토어 생성 */
         Store store1=Store.builder()
-                .jibunAddress("서울시 금천구 시흥2동")
-                .roadAddress("시흥대로 77길 ")
+                .address(Address.builder().fullAddress("서울시 금천구 시흥2동").build())
                 .location(geometryFactory.createPoint(new Coordinate(126.88,37.45)))
                 .name("을지맥주")
                 .thumbnailImage("https://via.placeholder.com/150")
                 .build();
 
         Store store2=Store.builder()
-                .jibunAddress("서울시 금천구 시흥3동")
-                .roadAddress("시흥대로 76길 ")
+                .address(Address.builder().fullAddress("서울시 금천구 시흥3동").build())
                 .location(geometryFactory.createPoint(new Coordinate(126.89,37.48)))
                 .name("을맥맥주")
                 .thumbnailImage("https://via.placeholder.com/150")
