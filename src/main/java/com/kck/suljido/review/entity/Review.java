@@ -24,7 +24,7 @@ public class Review extends BaseTimeEntity {
     @ManyToOne
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
     @OneToMany(mappedBy = "review")

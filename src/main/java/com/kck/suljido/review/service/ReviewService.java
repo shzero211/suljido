@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ReviewService {
     void createReview(ReviewDto.ReviewCreateRequest request, List<MultipartFile> images);
+
+    List<ReviewDto.FindStoreAllReviewResponse> findStoreAllReview(Long storeId);
 }

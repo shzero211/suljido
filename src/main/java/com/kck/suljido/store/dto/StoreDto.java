@@ -21,10 +21,10 @@ public class StoreDto {
                     .build();
         }
     }
-
-    public record FindNearByStoresResponse(Double lat,Double lng,String name){
+    @Builder
+    public record FindNearByStoresResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage){
         public static FindNearByStoresResponse from(Store store){
-            return new FindNearByStoresResponse(store.getLocation().getY(), store.getLocation().getX(),store.getName());
+            return FindNearByStoresResponse.builder().id(store.getId()).name(store.getName()).fullAddress(store.getAddress().getFullAddress()).lng(store.getLocation().getX()).lat(store.getLocation().getY()).thumbnailImage(store.getThumbnailImage()).build();
         }
     }
 }

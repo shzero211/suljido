@@ -18,5 +18,5 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     )
     List<Store> findStoresDistance(@Param("me")Point myLocation,@Param("radius") double radiusMeters);
 
-    Optional<Store> findByNameAndAddress(String storeName, Address address);
+    Optional<Store> findByNameAndAddress_FullAddress(String storeName, String fullAddress);
 }

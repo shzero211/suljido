@@ -1,5 +1,7 @@
 package com.kck.suljido.review.dto;
 
+import com.kck.suljido.review.entity.Review;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +30,16 @@ public class ReviewDto {
     }
     public static class ReviewCreateResponse{
 
+    }
+    @Builder
+    public record FindStoreAllReviewResponse(Long id,Integer rating,String category,String content) {
+        public static FindStoreAllReviewResponse from(Review review){
+            return FindStoreAllReviewResponse.builder()
+                    .id(review.getId())
+                    .rating(review.getRating())
+                    .category(review.getCategory())
+                    .content(review.getContent())
+                    .build();
+        }
     }
 }

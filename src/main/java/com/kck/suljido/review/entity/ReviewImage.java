@@ -15,8 +15,9 @@ public class ReviewImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String url;
+    @Lob
+    @Column(name="image_data",columnDefinition = "LONGBLOB")
+    private byte[] imageData;
 
     @ManyToOne
     @JoinColumn(name="review_id")
