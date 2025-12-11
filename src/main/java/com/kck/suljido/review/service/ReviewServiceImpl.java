@@ -7,6 +7,8 @@ import com.kck.suljido.review.entity.ReviewImage;
 import com.kck.suljido.review.repository.ReviewRepository;
 import com.kck.suljido.store.entity.Store;
 import com.kck.suljido.store.repository.StoreRepository;
+import com.kck.suljido.user.entity.User;
+import com.kck.suljido.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
     @Override
     public void createReview(ReviewDto.ReviewCreateRequest request, List<MultipartFile> images) {
         //주소 처리
@@ -58,6 +61,12 @@ public class ReviewServiceImpl implements ReviewService {
             return storeRepository.save(newStore);
         });
 
+        //임시 유저 생성(임시 테스트용)
+        User reviewUser=User.builder()
+                .nickname("KIMSANGHUN")
+                .username("김상훈")
+                .build();
+        userRepository.save(reviewUser);
 
         //리뷰 처리
         Review review=Review.builder()
@@ -66,6 +75,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .rating(request.getRating())
                 .category(request.getCategory())
                 .visitTime(request.getVisitTime())
+                .user(reviewUser)
                 .build();
 
         //리뷰 이미지 처리

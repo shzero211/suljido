@@ -32,13 +32,15 @@ public class ReviewDto {
 
     }
     @Builder
-    public record FindStoreAllReviewResponse(Long id,Integer rating,String category,String content) {
+    public record FindStoreAllReviewResponse(Long id,Integer rating,String category,String content,LocalDateTime createdAt,String author) {
         public static FindStoreAllReviewResponse from(Review review){
             return FindStoreAllReviewResponse.builder()
                     .id(review.getId())
                     .rating(review.getRating())
                     .category(review.getCategory())
                     .content(review.getContent())
+                    .createdAt(review.getCreatedAt())
+                    .author(review.getUser().getNickname())
                     .build();
         }
     }
