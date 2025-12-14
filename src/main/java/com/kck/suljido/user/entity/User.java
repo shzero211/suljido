@@ -1,12 +1,10 @@
 package com.kck.suljido.user.entity;
 
 import com.kck.suljido.entity.BaseTimeEntity;
+import com.kck.suljido.user.entity.enums.Role;
+import com.kck.suljido.user.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -21,11 +19,20 @@ public class User extends BaseTimeEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String username;
+    @Column(nullable = false , unique = true)
+    private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    private String username;
+
+    @Column(unique = true,nullable = false)
     private String nickname;
 
-    private Boolean deleted;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

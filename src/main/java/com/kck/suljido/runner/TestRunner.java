@@ -28,14 +28,14 @@ public class TestRunner implements CommandLineRunner {
         User user1 = User.builder()
                 .username("test1")
                 .password(passwordEncoder.encode("test1234"))
-                .deleted(Boolean.FALSE)
                 .nickname("nickname1")
+                .email("shzero211@naver.com")
                 .build();
         User user2 = User.builder()
                 .username("test2")
                 .password(passwordEncoder.encode("test5678"))
-                .deleted(Boolean.FALSE)
                 .nickname("nickname2")
+                .email("shzero2311@naver.com")
                 .build();
 
         userRepository.save(user1);
