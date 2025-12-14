@@ -1,9 +1,11 @@
 package com.kck.suljido.review.controller;
 
 import com.kck.suljido.common.Result;
+import com.kck.suljido.common.annotation.LoginUser;
 import com.kck.suljido.review.dto.ReviewDto;
 import com.kck.suljido.review.service.ReviewService;
 import com.kck.suljido.store.dto.StoreDto;
+import com.kck.suljido.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.http.MediaType;
@@ -19,10 +21,10 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result<Void> createReview (@RequestPart(value = "data")ReviewDto.ReviewCreateRequest request,
+    public Result<Void> createReview (@LoginUser User user, @RequestPart(value = "data")ReviewDto.ReviewCreateRequest request,
                                       @RequestPart(value = "image",required = false) List<MultipartFile> images){
 
-        reviewService.createReview(request,images);
+        reviewService.createReview(user,request,images);
         return new Result<>(0,null);
     }
 

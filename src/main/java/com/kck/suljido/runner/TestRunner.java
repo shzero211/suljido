@@ -4,6 +4,7 @@ import com.kck.suljido.common.Address;
 import com.kck.suljido.store.entity.Store;
 import com.kck.suljido.store.repository.StoreRepository;
 import com.kck.suljido.user.entity.User;
+import com.kck.suljido.user.entity.enums.Role;
 import com.kck.suljido.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
@@ -30,12 +31,14 @@ public class TestRunner implements CommandLineRunner {
                 .password(passwordEncoder.encode("test1234"))
                 .nickname("nickname1")
                 .email("shzero211@naver.com")
+                .role(Role.USER)
                 .build();
         User user2 = User.builder()
                 .username("test2")
                 .password(passwordEncoder.encode("test5678"))
                 .nickname("nickname2")
                 .email("shzero2311@naver.com")
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user1);

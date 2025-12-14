@@ -35,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
     @Override
-    public void createReview(ReviewDto.ReviewCreateRequest request, List<MultipartFile> images) {
+    public void createReview(User loginUser,ReviewDto.ReviewCreateRequest request, List<MultipartFile> images) {
         //주소 처리
        Address address= Address.builder()
                 .fullAddress(request.getStoreAddress())
@@ -61,13 +61,6 @@ public class ReviewServiceImpl implements ReviewService {
             return storeRepository.save(newStore);
         });
 
-        //임시 유저 생성(임시 테스트용)
-        User reviewUser=User.builder()
-                .nickname("KIMSANGHUN")
-                .username("김상훈")
-                .build();
-        userRepository.save(reviewUser);
-
         //리뷰 처리
         Review review=Review.builder()
                 .store(store)
@@ -75,7 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .rating(request.getRating())
                 .category(request.getCategory())
                 .visitTime(request.getVisitTime())
-                .user(reviewUser)
+                .user(loginUser)
                 .build();
 
         //리뷰 이미지 처리
