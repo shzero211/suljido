@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.Collections;
 @Slf4j
 @Component
-@Profile("test")
 @RequiredArgsConstructor
 public class TestMockFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
