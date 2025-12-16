@@ -29,6 +29,8 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	// 스프링 데이터 엘라스틱서치 (OpenSearch와 호환)
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'com.h2database:h2'
