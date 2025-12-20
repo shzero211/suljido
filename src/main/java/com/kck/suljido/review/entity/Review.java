@@ -21,13 +21,14 @@ public class Review extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
-    @OneToMany(mappedBy = "review")
+    @Builder.Default
+    @OneToMany(mappedBy = "review",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ReviewImage> images=new ArrayList<>();
 
     @Lob

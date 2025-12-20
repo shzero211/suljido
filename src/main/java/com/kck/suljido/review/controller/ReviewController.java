@@ -22,7 +22,7 @@ public class ReviewController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<Void> createReview (@LoginUser User user, @RequestPart(value = "data")ReviewDto.ReviewCreateRequest request,
-                                      @RequestPart(value = "image",required = false) List<MultipartFile> images){
+                                      @RequestPart(value = "images",required = false) List<MultipartFile> images){
 
         reviewService.createReview(user,request,images);
         return new Result<>(0,null);

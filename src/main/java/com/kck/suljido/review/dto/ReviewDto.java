@@ -1,11 +1,14 @@
 package com.kck.suljido.review.dto;
 
 import com.kck.suljido.review.entity.Review;
+import com.kck.suljido.review.entity.ReviewImage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReviewDto {
     @Getter
@@ -32,8 +35,10 @@ public class ReviewDto {
 
     }
     @Builder
-    public record FindStoreAllReviewResponse(Long id,Integer rating,String category,String content,LocalDateTime createdAt,String author) {
+    public record FindStoreAllReviewResponse(Long id, Integer rating, String category, String content, LocalDateTime createdAt, String author,
+                                             List<String> imagesUrls) {
         public static FindStoreAllReviewResponse from(Review review){
+            List<String> urls=review.getImages().stream().map(img->"/api/review-images/"+img.getId()).toList();
             return FindStoreAllReviewResponse.builder()
                     .id(review.getId())
                     .rating(review.getRating())
@@ -41,6 +46,7 @@ public class ReviewDto {
                     .content(review.getContent())
                     .createdAt(review.getCreatedAt())
                     .author(review.getUser().getNickname())
+                    .imagesUrls(urls)
                     .build();
         }
     }
