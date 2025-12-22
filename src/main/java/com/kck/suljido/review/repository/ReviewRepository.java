@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
-    @Query("select r from Review r join fetch r.images where r.store.id=:storeId ")
+    @Query("select r from Review r LEFT join fetch r.images where r.store.id=:storeId ")
     Page<Review> findByStoreId(@Param("storeId") Long storeId, Pageable pageable);
 }
