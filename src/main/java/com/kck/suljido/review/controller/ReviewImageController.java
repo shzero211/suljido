@@ -3,7 +3,7 @@ package com.kck.suljido.review.controller;
 import com.kck.suljido.review.entity.ReviewImage;
 import com.kck.suljido.review.repository.ReviewImageRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpHeaders;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

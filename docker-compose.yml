@@ -27,9 +27,10 @@ services:
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+      - plugins.security.ssl.http.enabled=false
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
       # [수정] 대문자(T) 추가 필수! (규칙: 대문자+소문자+숫자+특수문자)
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Test9957!
+      - "OPENSEARCH_INITIAL_ADMIN_PASSWORD=Huns9957!"
     ulimits:
       memlock:
         soft: -1
@@ -49,7 +50,7 @@ services:
     ports:
       - "5601:5601"
     environment:
-      - 'OPENSEARCH_HOSTS=["https://suljido-opensearch-node:9200"]'
+      - 'OPENSEARCH_HOSTS=["http://suljido-opensearch-node:9200"]'
       - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=false"
     depends_on:
       - suljido-opensearch-node

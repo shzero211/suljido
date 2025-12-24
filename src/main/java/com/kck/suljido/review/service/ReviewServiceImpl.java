@@ -6,7 +6,9 @@ import com.kck.suljido.review.entity.Review;
 import com.kck.suljido.review.entity.ReviewImage;
 import com.kck.suljido.review.repository.ReviewRepository;
 import com.kck.suljido.store.entity.Store;
+import com.kck.suljido.store.entity.elasticsearch.StoreDocument;
 import com.kck.suljido.store.repository.StoreRepository;
+import com.kck.suljido.store.repository.elasticsearch.StoreSearchRepository;
 import com.kck.suljido.user.entity.User;
 import com.kck.suljido.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
+    private final StoreSearchRepository storeSearchRepository;
     @Override
     public void createReview(User loginUser,ReviewDto.ReviewCreateRequest request, List<MultipartFile> images) {
         //주소 처리
@@ -58,7 +62,23 @@ public class ReviewServiceImpl implements ReviewService {
                     .address(address)
                     .location(location)
                     .build();
-            return storeRepository.save(newStore);
+            storeRepository.save(newStore);
+
+            //ElasticSearch 에 검색용 가게정보 추가 로직 구현
+            try {
+                StoreDocument doc=StoreDocument.builder()
+                        .id(newStore.getId())
+                        .name(request.getStoreName())
+                        .address(address)
+                        .searchAddress(request.getStoreAddress())
+                        .location(new GeoPoint(request.getLatitude(),request.getLongitude()))
+                        .build();
+
+                storeSearchRepository.save(doc);
+            }catch (Exception e){
+                log.error("ES sync failed",e);
+            }
+            return null;
         });
 
         //리뷰 처리

@@ -29,8 +29,20 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	// 스프링 데이터 엘라스틱서치 (OpenSearch와 호환)
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
+	// 1. OpenSearch Starter (구형 REST 클라이언트 제외)
+	implementation("org.opensearch.client:spring-data-opensearch-starter:1.8.0") {
+		exclude group: 'org.opensearch.client', module: 'opensearch-rest-high-level-client'
+	}
+
+	// 2. OpenSearch Java Client (신형 클라이언트 명시적 버전 지정)
+	implementation 'org.opensearch.client:opensearch-java:2.10.0'
+
+	// 3. 테스트용 Autoconfigure (구형 REST 클라이언트 제외)
+	testImplementation("org.opensearch.client:spring-data-opensearch-test-autoconfigure:1.8.0") {
+		exclude group: 'org.opensearch.client', module: 'opensearch-rest-high-level-client'
+	}
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'com.h2database:h2'
