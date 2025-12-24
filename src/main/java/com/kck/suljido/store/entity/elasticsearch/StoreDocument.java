@@ -1,9 +1,7 @@
 package com.kck.suljido.store.entity.elasticsearch;
 
 import com.kck.suljido.common.Address;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
@@ -12,6 +10,8 @@ import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 @Setting(settingPath = "/elasticsearch/store-setting.json")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class StoreDocument {
     @Id
