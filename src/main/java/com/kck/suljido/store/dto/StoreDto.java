@@ -22,9 +22,19 @@ public class StoreDto {
         }
     }
     @Builder
-    public record FindNearByStoresResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage){
+    public record FindNearByStoresResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage,Double avgRating,String bestCategory,Integer reviewCount){
         public static FindNearByStoresResponse from(Store store){
-            return FindNearByStoresResponse.builder().id(store.getId()).name(store.getName()).fullAddress(store.getAddress().getFullAddress()).lng(store.getLocation().getX()).lat(store.getLocation().getY()).thumbnailImage(store.getThumbnailImage()).build();
+            return FindNearByStoresResponse.builder()
+                    .id(store.getId())
+                    .name(store.getName())
+                    .fullAddress(store.getAddress().getFullAddress())
+                    .lng(store.getLocation().getX())
+                    .lat(store.getLocation().getY())
+                    .thumbnailImage(store.getThumbnailImage())
+                    .avgRating(store.getAvgRating())
+                    .bestCategory(store.getBestCategory())
+                    .reviewCount(store.getReviewCount())
+                    .build();
         }
     }
 }

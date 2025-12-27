@@ -28,6 +28,7 @@ services:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - plugins.security.ssl.http.enabled=false
+      - plugins.security.disabled=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
       # [수정] 대문자(T) 추가 필수! (규칙: 대문자+소문자+숫자+특수문자)
       - "OPENSEARCH_INITIAL_ADMIN_PASSWORD=Huns9957!"

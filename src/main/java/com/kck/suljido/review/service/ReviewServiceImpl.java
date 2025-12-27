@@ -78,7 +78,7 @@ public class ReviewServiceImpl implements ReviewService {
             }catch (Exception e){
                 log.error("ES sync failed",e);
             }
-            return null;
+            return newStore;
         });
 
         //리뷰 처리
@@ -107,7 +107,8 @@ public class ReviewServiceImpl implements ReviewService {
                 }
             }
         }
-
+        //가게리뷰 정보 업데이트
+        storeRepository.incrementReviewStatus(store.getId(),review.getRating(),review.getCategory());
         reviewRepository.save(review);
     }
 
