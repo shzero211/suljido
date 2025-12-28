@@ -119,4 +119,10 @@ public class ReviewServiceImpl implements ReviewService {
         return reviews.stream().map(ReviewDto.FindStoreAllReviewResponse::from)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ReviewDto.FindMyReviewResponse> findMyReview(Long userId,Pageable pageable) {
+        Page<Review> reviews=reviewRepository.findMyReviewByUserId(userId,pageable);
+        return reviews.stream().map(ReviewDto.FindMyReviewResponse::from).toList();
+    }
 }

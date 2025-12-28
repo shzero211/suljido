@@ -12,4 +12,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review,Long> {
     @Query("select r from Review r LEFT join fetch r.images where r.store.id=:storeId ")
     Page<Review> findByStoreId(@Param("storeId") Long storeId, Pageable pageable);
+    @Query("select id, rating, category, content, createdAt from Review r where r.user.id=:userId")
+    Page<Review> findMyReviewByUserId(@Param("userId") Long userId,Pageable pageable);
 }

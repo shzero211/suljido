@@ -3,11 +3,15 @@ package com.kck.suljido.review.controller;
 import com.kck.suljido.common.Result;
 import com.kck.suljido.common.annotation.LoginUser;
 import com.kck.suljido.review.dto.ReviewDto;
+import com.kck.suljido.review.entity.Review;
 import com.kck.suljido.review.service.ReviewService;
 import com.kck.suljido.store.dto.StoreDto;
 import com.kck.suljido.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +35,12 @@ public class ReviewController {
     @GetMapping("/{storeId}")
     public Result<List<ReviewDto.FindStoreAllReviewResponse>> findAllReview(@PathVariable(name = "storeId")Long StoreId){
         List<ReviewDto.FindStoreAllReviewResponse> reviews=reviewService.findStoreAllReview(StoreId);
+        return new Result<>(0,reviews);
+    }
+
+    @GetMapping("/my-review")
+    public Result<List<ReviewDto.FindMyReviewResponse>> findMyReview(@LoginUser User user, @PageableDefault(page=0,size = 10,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable){
+        List<ReviewDto.FindMyReviewResponse> reviews=reviewService.findMyReview(user.getId(),pageable);
         return new Result<>(0,reviews);
     }
 }

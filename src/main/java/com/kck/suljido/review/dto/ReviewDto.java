@@ -50,4 +50,22 @@ public class ReviewDto {
                     .build();
         }
     }
+
+    public record FindMyReviewRequest(Long userId){
+
+    }
+    @Builder
+    public record FindMyReviewResponse(Long id, Integer rating, String category, String content, LocalDateTime createdAt, List<String> imagesUrls) {
+        public static FindMyReviewResponse from(Review review){
+            List<String> urls=review.getImages().stream().map(reviewImage -> "/api/review-images/"+reviewImage.getId()).toList();
+            return FindMyReviewResponse.builder()
+                    .id(review.getId())
+                    .rating(review.getRating())
+                    .category(review.getCategory())
+                    .content(review.getContent())
+                    .createdAt(review.getCreatedAt())
+                    .imagesUrls(urls)
+                    .build();
+        }
+    }
 }
