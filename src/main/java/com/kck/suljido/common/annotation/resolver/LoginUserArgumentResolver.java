@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -33,8 +34,13 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         if(authentication ==null || authentication.getPrincipal().equals("anonymousUser")){
             throw new IllegalStateException("로그인이 필요한 서비스 입니다.");
         }
-        User user= (User) authentication.getPrincipal();
-        log.info("ResolveArgument 로깅 : "+user.toString());
-        return userRepository.findByEmail(user.getEmail()).orElseThrow(()->new IllegalStateException("존재하지 않는 회원 입니다."));
+        Object principal=authentication.getPrincipal();
+
+        UserDetails userDetails=(UserDetails)principal;
+        String userIdStr=userDetails.getUsername();
+        Long userId=Long.parseLong(userIdStr);
+
+        log.info("ResolveArgument 로깅 : ${}",userIdStr);
+        return userRepository.findById(userId).orElseThrow(()->new IllegalStateException("존재하지 않는 회원 입니다."));
     }
 }

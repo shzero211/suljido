@@ -1,4 +1,4 @@
-package com.kck.suljido.config.filter;
+package com.kck.suljido.config.security.filter;
 
 import com.kck.suljido.user.entity.User;
 import com.kck.suljido.user.repository.UserRepository;
