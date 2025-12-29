@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
-@Document(indexName = "suljido_stores")
-@Setting(settingPath = "/elasticsearch/store-setting.json")
+@Document(indexName = "suljido_stores",createIndex = false)
+//@Setting(settingPath = "/elasticsearch/store-setting.json")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
