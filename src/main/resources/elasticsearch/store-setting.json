@@ -4,8 +4,7 @@
       "tokenizer": {
         "nori_custom_tokenizer": {
           "type": "nori_tokenizer",
-          "decompound_mode": "mixed",
-          "user_dictionary": "nori_dict.txt"
+          "decompound_mode": "mixed"
         }
       },
       "filter": {
