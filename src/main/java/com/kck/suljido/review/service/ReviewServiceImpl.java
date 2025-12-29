@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
         //주소 처리
        Address address= Address.builder()
                 .fullAddress(request.getStoreAddress())
-               .province(request.getProvince())
+                .province(request.getProvince())
                 .city(request.getCity())
                 .district(request.getDistrict())
                 .build();

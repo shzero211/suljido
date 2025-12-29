@@ -1,24 +1,32 @@
 package com.kck.suljido.config.security.filter;
 
 import com.kck.suljido.config.security.util.JwtUtil;
+import com.kck.suljido.user.entity.enums.Role;
+import com.kck.suljido.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
-//@Component
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // ★ 이 로그가 콘솔에 찍히는지 확인
@@ -27,6 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authorizationHeader=request.getHeader("Authorization");
 
         log.info("authorizationHeader:${}",authorizationHeader);
+
         if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
             logger.info("JwtAuth Filter 작동");
             String token=authorizationHeader.substring(7);
@@ -40,6 +49,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         }else{
             log.info("올바른 JWT 토큰이 아닙니다.");
+            log.info("현재는 테스트 주잉여서 테스트 유저 주입해드립니다.{}","user1");
+
+            SimpleGrantedAuthority authority=new SimpleGrantedAuthority(Role.ADMIN.toString());
+            UserDetails principal = new User("1", "", Collections.singleton(authority));
+            Authentication auth =new UsernamePasswordAuthenticationToken(principal,"", Collections.singleton(authority));
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(request,response);
     }

@@ -1,6 +1,7 @@
 package com.kck.suljido.user.dto;
 
 import com.kck.suljido.user.entity.User;
+import com.kck.suljido.user.entity.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ import lombok.Getter;
 public class UserDto {
 
     @Builder
-    public record UserSignUpRequest(String email,String password,String nickname){}
+    public record UserSignUpRequest(String email, String password, String nickname, Role role){}
     @Builder
     public record UserSignUpResponse() {
     }

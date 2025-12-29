@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     // Optional로 감싸서, 빈이 없을 때(prod 환경 등) 에러 안 나게 처리
     private final Optional<TestMockFilter> testMockFilter;
-    private final JwtUtil jwtUtil;
+    private final JwtAuthFilter jwtAuthFilter;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -46,8 +46,8 @@ public class SecurityConfig {
                 .headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->auth.requestMatchers("/api/users/**").permitAll().anyRequest().authenticated())
-                .addFilterBefore(new JwtAuthFilter(jwtUtil),UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(auth->auth.requestMatchers("/api/**").permitAll().anyRequest().authenticated())
+                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
 
         // 필터가 존재할 때만(Test 환경일 때만) 체인에 추가
 //        testMockFilter.ifPresent(filter ->

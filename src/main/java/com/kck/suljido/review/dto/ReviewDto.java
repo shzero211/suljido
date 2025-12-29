@@ -2,6 +2,7 @@ package com.kck.suljido.review.dto;
 
 import com.kck.suljido.review.entity.Review;
 import com.kck.suljido.review.entity.ReviewImage;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 public class ReviewDto {
     @Getter
     @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
     public static class ReviewCreateRequest{
         //가게 정보
         private String storeName;

@@ -32,8 +32,6 @@ public class Store extends BaseTimeEntity {
 
     private String thumbnailImage;
 
-    private String category;
-
     private Long totalRating;
 
     private Integer reviewCount;
