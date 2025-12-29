@@ -2,9 +2,9 @@ package com.kck.suljido.store.controller;
 
 import com.kck.suljido.common.Result;
 import com.kck.suljido.store.dto.StoreDto;
+import com.kck.suljido.store.entity.enums.Category;
 import com.kck.suljido.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,4 +27,9 @@ public class StoreController {
         return new Result<>(stores.size(),stores);
     }
 
+    @GetMapping("/category")
+    public Result<List<StoreDto.FindRadiusCategoryStoreResponse>> getCategoryRadiusStores(@RequestParam("lat") double lat, @RequestParam("lng") double lng, @RequestParam("km") double km, @RequestParam("category")Category category){
+        List stores=storeService.findStoresByRadiusAndCategory(lat,lng,km,category);
+        return new Result<>(stores.size(),stores);
+    }
 }

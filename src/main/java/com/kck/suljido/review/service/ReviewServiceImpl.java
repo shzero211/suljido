@@ -7,10 +7,10 @@ import com.kck.suljido.review.entity.ReviewImage;
 import com.kck.suljido.review.repository.ReviewRepository;
 import com.kck.suljido.store.entity.Store;
 import com.kck.suljido.store.entity.elasticsearch.StoreDocument;
+import com.kck.suljido.store.entity.enums.Category;
 import com.kck.suljido.store.repository.StoreRepository;
 import com.kck.suljido.store.repository.elasticsearch.StoreSearchRepository;
 import com.kck.suljido.user.entity.User;
-import com.kck.suljido.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
-    private final UserRepository userRepository;
     private final StoreSearchRepository storeSearchRepository;
     @Override
     public void createReview(User loginUser,ReviewDto.ReviewCreateRequest request, List<MultipartFile> images) {
@@ -107,8 +106,10 @@ public class ReviewServiceImpl implements ReviewService {
                 }
             }
         }
-        //가게리뷰 정보 업데이트
-        storeRepository.incrementReviewStatus(store.getId(),review.getRating(),review.getCategory());
+        //가게 메인카테고리 정보 수정
+        Category topCategory=reviewRepository.findTopCategoryByStoreId(store.getId());
+        store.updateMainCategory(topCategory);
+
         reviewRepository.save(review);
     }
 

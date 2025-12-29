@@ -2,6 +2,7 @@ package com.kck.suljido.store.entity;
 
 import com.kck.suljido.common.Address;
 import com.kck.suljido.entity.BaseTimeEntity;
+import com.kck.suljido.store.entity.enums.Category;
 import jakarta.persistence.*;
 import lombok.*;
 import org.locationtech.jts.geom.Point;
@@ -36,37 +37,17 @@ public class Store extends BaseTimeEntity {
 
     private Integer reviewCount;
 
-    @Builder.Default
-    private Integer sojuCount = 0;
-    @Builder.Default
-    private Integer beerCount = 0;
-    @Builder.Default
-    private Integer wineCount = 0;
-    @Builder.Default
-    private Integer whiskyCount = 0;
-    @Builder.Default
-    private Integer traditionalCount = 0;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "main_category")
+    private Category mainCategory;
+
     public Double getAvgRating(){
         if(reviewCount==null || reviewCount==0 ) return 0.0;
        long total = (this.totalRating==null)? 0L : this.totalRating;
         return (double)total/reviewCount;
     }
-    public String getBestCategory(){
-        Map<String,Integer> counts=new HashMap<>();
-        counts.put("소주", sojuCount);
-        counts.put("맥주", beerCount);
-        counts.put("와인", wineCount);
-        counts.put("위스키", whiskyCount);
-        counts.put("전통주", traditionalCount);
 
-        int maxCount= Collections.max(counts.values());
-
-        if(maxCount==0) return "정보없음";
-
-        return counts.entrySet().stream()
-                .filter(entry->entry.getValue() == maxCount)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.joining(", "));
+    public void updateMainCategory(Category topCategory) {
+        this.mainCategory=topCategory;
     }
-
 }

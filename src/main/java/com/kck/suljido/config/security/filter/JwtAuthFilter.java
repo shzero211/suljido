@@ -49,7 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         }else{
             log.info("올바른 JWT 토큰이 아닙니다.");
-            log.info("현재는 테스트 주잉여서 테스트 유저 주입해드립니다.{}","user1");
+            log.info("현재는 테스트 중이여서 테스트 유저 주입해드립니다.{}","user1");
 
             SimpleGrantedAuthority authority=new SimpleGrantedAuthority(Role.ADMIN.toString());
             UserDetails principal = new User("1", "", Collections.singleton(authority));

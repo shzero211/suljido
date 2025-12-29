@@ -22,7 +22,7 @@ public class StoreDto {
         }
     }
     @Builder
-    public record FindNearByStoresResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage,Double avgRating,String bestCategory,Integer reviewCount){
+    public record FindNearByStoresResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage,Double avgRating,String mainCategory,Integer reviewCount){
         public static FindNearByStoresResponse from(Store store){
             return FindNearByStoresResponse.builder()
                     .id(store.getId())
@@ -32,7 +32,23 @@ public class StoreDto {
                     .lat(store.getLocation().getY())
                     .thumbnailImage(store.getThumbnailImage())
                     .avgRating(store.getAvgRating())
-                    .bestCategory(store.getBestCategory())
+                    .mainCategory(store.getMainCategory().toString())
+                    .reviewCount(store.getReviewCount())
+                    .build();
+        }
+    }
+    @Builder
+    public record FindRadiusCategoryStoreResponse(Long id,String name,String fullAddress,double lng,double lat,String thumbnailImage,Double avgRating,String mainCategory,Integer reviewCount) {
+        public static FindRadiusCategoryStoreResponse from(Store store){
+            return FindRadiusCategoryStoreResponse.builder()
+                    .id(store.getId())
+                    .name(store.getName())
+                    .fullAddress(store.getAddress().getFullAddress())
+                    .lng(store.getLocation().getX())
+                    .lat(store.getLocation().getY())
+                    .thumbnailImage(store.getThumbnailImage())
+                    .avgRating(store.getAvgRating())
+                    .mainCategory(store.getMainCategory().toString())
                     .reviewCount(store.getReviewCount())
                     .build();
         }

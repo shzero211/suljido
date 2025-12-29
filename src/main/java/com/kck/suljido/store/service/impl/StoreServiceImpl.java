@@ -2,6 +2,7 @@ package com.kck.suljido.store.service.impl;
 
 import com.kck.suljido.store.dto.StoreDto;
 import com.kck.suljido.store.entity.Store;
+import com.kck.suljido.store.entity.enums.Category;
 import com.kck.suljido.store.repository.StoreRepository;
 import com.kck.suljido.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,11 @@ public class StoreServiceImpl implements StoreService {
        double radiusMeters=km*1000;
         List<Store> entities=storeRepository.findStoresDistance(myLocation,radiusMeters);
         return entities.stream().map(StoreDto.FindNearByStoresResponse::from).toList();
+    }
+
+    @Override
+    public List findStoresByRadiusAndCategory(double lat, double lng, double km, Category category) {
+        List<Store> entities=storeRepository.findStoresByRadiusAndCategory(lat, lng, km, category);
+        return entities.stream().map(StoreDto.FindRadiusCategoryStoreResponse::from).toList();
     }
 }
