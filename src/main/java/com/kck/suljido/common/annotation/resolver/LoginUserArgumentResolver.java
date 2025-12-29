@@ -28,7 +28,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public User resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         log.info("사용자정보:"+authentication.toString());
         if(authentication ==null || authentication.getPrincipal().equals("anonymousUser")){
