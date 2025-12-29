@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.lang.NonNull;
 
 @Configuration
-@Profile("!prod")
+@Profile("prod")
 public class OpenSearchProdConfig extends OpenSearchConfiguration {
     @Value("${opensearch.custom.uri}")
     private String uri;
