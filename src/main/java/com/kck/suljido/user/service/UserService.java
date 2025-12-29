@@ -64,4 +64,9 @@ public class UserService {
                 .expiredIn(new Date(now.getTime() + validTime).getTime())
                 .build();
     }
+
+    public UserDto.MyPageResponse getMyPage(Long id) {
+        User user=userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("[나의페이지] 유저가 존재하지않습니다."));
+        return UserDto.MyPageResponse.from(user);
+    }
 }

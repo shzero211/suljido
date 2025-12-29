@@ -1,16 +1,16 @@
 package com.kck.suljido.user.controller;
 
 import com.kck.suljido.common.Result;
+import com.kck.suljido.common.annotation.LoginUser;
 import com.kck.suljido.user.dto.UserDto;
+import com.kck.suljido.user.entity.User;
 import com.kck.suljido.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,4 +32,9 @@ public class UserController {
                 .body(responseDTO);
     }
 
+    @GetMapping("/my-page")
+    public ResponseEntity<UserDto.MyPageResponse> myPage(@LoginUser User user){
+        UserDto.MyPageResponse response= userService.getMyPage(user.getId());
+        return ResponseEntity.ok(response);
+    }
 }
