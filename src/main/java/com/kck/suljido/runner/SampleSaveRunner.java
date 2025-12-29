@@ -14,6 +14,7 @@ import com.kck.suljido.user.entity.enums.Role;
 import com.kck.suljido.user.repository.UserRepository;
 import com.kck.suljido.user.service.UserService;
 import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.Order;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,7 @@ import java.util.List;
 @Profile({"prod","test"})
 @Component
 @AllArgsConstructor
+@Order(2)
 public class SampleSaveRunner implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;

@@ -32,7 +32,7 @@ public class StoreDto {
                     .lat(store.getLocation().getY())
                     .thumbnailImage(store.getThumbnailImage())
                     .avgRating(store.getAvgRating())
-                    .mainCategory(store.getMainCategory().toString())
+                    .mainCategory(store.getMainCategory() != null ? store.getMainCategory().name() : null)
                     .reviewCount(store.getReviewCount())
                     .build();
         }
@@ -48,7 +48,7 @@ public class StoreDto {
                     .lat(store.getLocation().getY())
                     .thumbnailImage(store.getThumbnailImage())
                     .avgRating(store.getAvgRating())
-                    .mainCategory(store.getMainCategory().toString())
+                    .mainCategory(store.getMainCategory() != null ? store.getMainCategory().name() : null)
                     .reviewCount(store.getReviewCount())
                     .build();
         }
