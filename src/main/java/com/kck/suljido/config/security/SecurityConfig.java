@@ -1,5 +1,6 @@
 package com.kck.suljido.config.security;
 
+import com.kck.suljido.config.mdc.MdcLoggingFilter;
 import com.kck.suljido.config.security.filter.JwtAuthFilter;
 import com.kck.suljido.config.security.filter.TestMockFilter;
 import com.kck.suljido.config.security.util.JwtUtil;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -31,6 +33,7 @@ public class SecurityConfig {
     // Optional로 감싸서, 빈이 없을 때(prod 환경 등) 에러 안 나게 처리
     private final Optional<TestMockFilter> testMockFilter;
     private final JwtAuthFilter jwtAuthFilter;
+    private final MdcLoggingFilter mdcLoggingFilter;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -47,7 +50,10 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/**").permitAll().anyRequest().authenticated())
-                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class)
+                // ★ [핵심] MDC 필터를 'AnonymousAuthenticationFilter' 뒤에 배치
+                // 이 시점에는 로그인 사용자든, 익명 사용자든 신원이 확정된 상태입니다.
+                .addFilterAfter(mdcLoggingFilter, AnonymousAuthenticationFilter.class);
 
         // 필터가 존재할 때만(Test 환경일 때만) 체인에 추가
 //        testMockFilter.ifPresent(filter ->
