@@ -1,5 +1,6 @@
 package com.kck.suljido.config.security.filter;
 
+import com.kck.suljido.config.security.dto.CustomUserDetails;
 import com.kck.suljido.config.security.util.JwtUtil;
 import com.kck.suljido.user.entity.enums.Role;
 import com.kck.suljido.user.repository.UserRepository;
@@ -52,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             log.info("현재는 테스트 중이여서 테스트 유저 주입해드립니다.{}","user1");
 
             SimpleGrantedAuthority authority=new SimpleGrantedAuthority(Role.ADMIN.toString());
-            UserDetails principal = new User("1", "", Collections.singleton(authority));
+            CustomUserDetails principal = new CustomUserDetails(1L, "HunZang9957@naver.com","", Collections.singleton(authority));
             Authentication auth =new UsernamePasswordAuthenticationToken(principal,"", Collections.singleton(authority));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

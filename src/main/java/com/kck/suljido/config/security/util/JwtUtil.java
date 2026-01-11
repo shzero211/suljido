@@ -1,5 +1,6 @@
 package com.kck.suljido.config.security.util;
 
+import com.kck.suljido.config.security.dto.CustomUserDetails;
 import com.kck.suljido.config.security.dto.CustomUserInfoDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -67,13 +68,13 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
         String userIdStr=claims.getSubject();
         String email= claims.get("email",String.class);
         String role = claims.get("role",String.class);
 
         Collection<? extends GrantedAuthority> authorities=Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role));
-
-        UserDetails principal = new User(userIdStr,"",authorities);
+        CustomUserDetails principal=new CustomUserDetails(Long.valueOf(userIdStr),email,role,authorities);
         return new UsernamePasswordAuthenticationToken(principal,"",authorities);
     }
 }
