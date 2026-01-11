@@ -1,6 +1,7 @@
 package com.kck.suljido.common.annotation.resolver;
 
 import com.kck.suljido.common.annotation.LoginUser;
+import com.kck.suljido.config.security.dto.CustomUserDetails;
 import com.kck.suljido.user.entity.User;
 import com.kck.suljido.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +37,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         }
         Object principal=authentication.getPrincipal();
 
-        UserDetails userDetails=(UserDetails)principal;
-        String userIdStr=userDetails.getUsername();
-        Long userId=Long.parseLong(userIdStr);
-
-        log.info("ResolveArgument 로깅 : ${}",userIdStr);
+        CustomUserDetails userDetails=(CustomUserDetails)principal;
+        Long userId=userDetails.getId();
         return userRepository.findById(userId).orElseThrow(()->new IllegalStateException("존재하지 않는 회원 입니다."));
     }
 }
