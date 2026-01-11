@@ -14,7 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 @Slf4j
 public class LogAspect {
-    @Around("execution(* com.suljido.controller..*(..))")
+    @Around("execution(* com.kck.suljido..controller..*.*(..))")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long start =System.currentTimeMillis();
 
